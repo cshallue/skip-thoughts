@@ -7,14 +7,14 @@ from sklearn.cross_validation import KFold
 from sklearn.utils import shuffle
 
 
-def evaluate(model, k=10, seed=1234, evalcv=True, evaltest=False):
+def evaluate(model, k=10, seed=1234, evalcv=True, evaltest=False, loc='./data/'):
     """
     Run experiment
     k: number of CV folds
     test: whether to evaluate on test set
     """
     print 'Preparing data...'
-    traintext, testtext = load_data()
+    traintext, testtext = load_data(loc)
     train, train_labels = prepare_data(traintext)
     test, test_labels = prepare_data(testtext)
     train_labels = prepare_labels(train_labels)

@@ -11,14 +11,14 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import f1_score as f1
 
 
-def evaluate(model, k=10, seed=1234, evalcv=True, evaltest=False, use_feats=True):
+def evaluate(model, k=10, seed=1234, evalcv=True, evaltest=False, use_feats=True, loc='./data/'):
     """
     Run experiment
     k: number of CV folds
     test: whether to evaluate on test set
     """
     print 'Preparing data...'
-    traintext, testtext, labels = load_data()
+    traintext, testtext, labels = load_data(loc)
 
     print 'Computing training skipthoughts...'
     trainA = skipthoughts.encode(model, traintext[0], verbose=False)

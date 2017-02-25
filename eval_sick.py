@@ -13,12 +13,12 @@ from keras.layers.core import Dense, Activation
 from keras.optimizers import Adam
 
 
-def evaluate(encoder, seed=1234, evaltest=False):
+def evaluate(encoder, seed=1234, evaltest=False, loc='./data'):
     """
     Run experiment
     """
     print 'Preparing data...'
-    train, dev, test, scores = load_data()
+    train, dev, test, scores = load_data(loc)
     train[0], train[1], scores[0] = shuffle(train[0], train[1], scores[0], random_state=seed)
     
     print 'Computing training skipthoughts...'
