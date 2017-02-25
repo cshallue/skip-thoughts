@@ -20,7 +20,7 @@ profile = False
 #-----------------------------------------------------------------------------#
 # Specify model and table locations here
 #-----------------------------------------------------------------------------#
-path_to_models ='/u/rkiros/public_html/models/'
+path_to_models = '/u/rkiros/public_html/models/'
 path_to_tables = '/u/rkiros/public_html/models/'
 #-----------------------------------------------------------------------------#
 
