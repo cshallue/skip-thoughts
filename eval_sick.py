@@ -2,7 +2,6 @@
 Evaluation code for the SICK dataset (SemEval 2014 Task 1)
 '''
 import numpy as np
-import skipthoughts
 import copy
 from sklearn.metrics import mean_squared_error as mse
 from scipy.stats import pearsonr
@@ -14,7 +13,7 @@ from keras.layers.core import Dense, Activation
 from keras.optimizers import Adam
 
 
-def evaluate(model, seed=1234, evaltest=False):
+def evaluate(encoder, seed=1234, evaltest=False):
     """
     Run experiment
     """
@@ -23,12 +22,12 @@ def evaluate(model, seed=1234, evaltest=False):
     train[0], train[1], scores[0] = shuffle(train[0], train[1], scores[0], random_state=seed)
     
     print 'Computing training skipthoughts...'
-    trainA = skipthoughts.encode(model, train[0], verbose=False, use_eos=True)
-    trainB = skipthoughts.encode(model, train[1], verbose=False, use_eos=True)
+    trainA = encoder.encode(train[0], verbose=False, use_eos=True)
+    trainB = encoder.encode(train[1], verbose=False, use_eos=True)
     
     print 'Computing development skipthoughts...'
-    devA = skipthoughts.encode(model, dev[0], verbose=False, use_eos=True)
-    devB = skipthoughts.encode(model, dev[1], verbose=False, use_eos=True)
+    devA = encoder.encode(dev[0], verbose=False, use_eos=True)
+    devB = encoder.encode(dev[1], verbose=False, use_eos=True)
 
     print 'Computing feature combinations...'
     trainF = np.c_[np.abs(trainA - trainB), trainA * trainB]
@@ -46,8 +45,8 @@ def evaluate(model, seed=1234, evaltest=False):
 
     if evaltest:
         print 'Computing test skipthoughts...'
-        testA = skipthoughts.encode(model, test[0], verbose=False, use_eos=True)
-        testB = skipthoughts.encode(model, test[1], verbose=False, use_eos=True)
+        testA = encoder.encode(test[0], verbose=False, use_eos=True)
+        testB = encoder.encode(test[1], verbose=False, use_eos=True)
 
         print 'Computing feature combinations...'
         testF = np.c_[np.abs(testA - testB), testA * testB]
@@ -70,7 +69,7 @@ def prepare_model(ninputs=9600, nclass=5):
     Set up and compile the model architecture (Logistic regression)
     """
     lrmodel = Sequential()
-    lrmodel.add(Dense(ninputs, nclass))
+    lrmodel.add(Dense(input_dim=ninputs, output_dim=nclass))
     lrmodel.add(Activation('softmax'))
     lrmodel.compile(loss='categorical_crossentropy', optimizer='adam')
     return lrmodel

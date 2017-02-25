@@ -20,8 +20,8 @@ profile = False
 #-----------------------------------------------------------------------------#
 # Specify model and table locations here
 #-----------------------------------------------------------------------------#
-path_to_models = '/u/rkiros/public_html/models/'
-path_to_tables = '/u/rkiros/public_html/models/'
+path_to_models = '/usr/local/google/home/shallue/skip-thoughts/kiros-data/'
+path_to_tables = '/usr/local/google/home/shallue/skip-thoughts/kiros-data/'
 #-----------------------------------------------------------------------------#
 
 path_to_umodel = path_to_models + 'uni_skip.npz'
@@ -85,6 +85,21 @@ def load_tables():
     utable = OrderedDict(zip(words, utable))
     btable = OrderedDict(zip(words, btable))
     return utable, btable
+
+
+class Encoder(object):
+    """
+    Sentence encoder.
+    """
+
+    def __init__(self, model):
+      self._model = model
+
+    def encode(self, X, use_norm=True, verbose=True, batch_size=128, use_eos=False):
+      """
+      Encode sentences in the list X. Each entry will return a vector
+      """
+      return encode(self._model, X, use_norm, verbose, batch_size, use_eos)
 
 
 def encode(model, X, use_norm=True, verbose=True, batch_size=128, use_eos=False):

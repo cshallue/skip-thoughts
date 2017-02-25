@@ -2,7 +2,6 @@
 Evaluation code for the TREC dataset
 '''
 import numpy as np
-import skipthoughts
 from sklearn.linear_model import LogisticRegression
 from sklearn.cross_validation import KFold
 from sklearn.utils import shuffle
@@ -23,7 +22,7 @@ def evaluate(model, k=10, seed=1234, evalcv=True, evaltest=False):
     train, train_labels = shuffle(train, train_labels, random_state=seed)
 
     print 'Computing training skipthoughts...'
-    trainF = skipthoughts.encode(model, train, verbose=False, use_eos=False)
+    trainF = encoder.encode(train, verbose=False, use_eos=False)
     
     if evalcv:
         print 'Running cross-validation...'
@@ -35,7 +34,7 @@ def evaluate(model, k=10, seed=1234, evalcv=True, evaltest=False):
             C = 128     # Best parameter found from CV
 
         print 'Computing testing skipthoughts...'
-        testF = skipthoughts.encode(model, test, verbose=False, use_eos=False)
+        testF = encoder.encode(test, verbose=False, use_eos=False)
 
         print 'Evaluating...'
         clf = LogisticRegression(C=C)
