@@ -7,7 +7,7 @@ from sklearn.cross_validation import KFold
 from sklearn.utils import shuffle
 
 
-def evaluate(model, k=10, seed=1234, evalcv=True, evaltest=False, loc='./data/'):
+def evaluate(encoder, k=10, seed=1234, evalcv=True, evaltest=False, loc='./data/'):
     """
     Run experiment
     k: number of CV folds

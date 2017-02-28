@@ -13,7 +13,7 @@ from keras.layers.core import Dense, Activation
 from keras.optimizers import Adam
 
 
-def evaluate(encoder, seed=1234, evaltest=False, loc='./data'):
+def evaluate(encoder, seed=1234, evaltest=False, loc='./data/'):
     """
     Run experiment
     """
